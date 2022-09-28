@@ -11,6 +11,21 @@ dependencies:
   flutter:
     sdk: flutter
 
+  ## Infrastructure
+  common_dependencies:
+    path: ../infrastructure/common_dependencies/
+  core:
+    path: ../infrastructure/core/
+  shared_presentation:
+    path: ../infrastructure/shared_presentation/
+  shared_data:
+    path: ../infrastructure/shared_data/
+
+  ## Features
+
+  flutter_localizations:
+    sdk: flutter
+
   cupertino_icons: ^1.0.2
 
 dev_dependencies:
@@ -21,5 +36,18 @@ dev_dependencies:
 
 
 flutter:
-
   uses-material-design: true
+
+  fonts:
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/OpenSans-Light.ttf
+          weight: 300
+        - asset: assets/fonts/OpenSans-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/OpenSans-Semibold.ttf
+          weight: 600
+        - asset: assets/fonts/OpenSans-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/OpenSans-ExtraBold.ttf
+          weight: 900

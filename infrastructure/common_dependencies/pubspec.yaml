@@ -1,0 +1,22 @@
+name: common_dependencies
+description: This package aims to provide common dependencies between modules
+publish_to: none
+version: 0.0.1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+  flutter: ">=2.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  navigator:
+    path: ../navigator/
+
+  ## Packages
+  intl: ^0.17.0
+  rxdart: ^0.27.2
+
+
+

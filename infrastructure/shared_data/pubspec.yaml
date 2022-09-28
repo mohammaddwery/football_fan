@@ -1,0 +1,24 @@
+name: shared_data
+description: A new Flutter project.
+publish_to: none
+version: 0.0.1
+
+environment:
+  sdk: ">=2.17.5 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  dio: 4.0.0
+  pretty_dio_logger: ^1.1.1
+  shared_preferences: 2.0.7
+
+  core:
+    path: ../../infrastructure/core/
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0

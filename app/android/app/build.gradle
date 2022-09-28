@@ -51,6 +51,7 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        resValue "string", "build_config_package", "com.threemiles.football_fan"
     }
 
     buildTypes {
@@ -58,6 +59,25 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+        }
+    }
+
+    flavorDimensions "flavors"
+    productFlavors {
+        develop {
+            dimension "flavors"
+            applicationIdSuffix ".dev"
+            manifestPlaceholders = [appName: "[Dev] Football Fan"]
+        }
+        staging {
+            dimension "flavors"
+            applicationIdSuffix ".stg"
+            manifestPlaceholders = [appName: "[Stage] Football Fan"]
+        }
+        production {
+            dimension "flavors"
+            applicationIdSuffix ""
+            manifestPlaceholders = [appName: "Football Fan"]
         }
     }
 }
