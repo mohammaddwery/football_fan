@@ -6,6 +6,7 @@ abstract class BuildConfig {
   BuildConfig({required this.environmentType, required this.configs,});
 
   static const String apiBaseUrlKey = 'apiBaseUrlKey';
+  static const String apiKey = 'apiKey';
 
   bool? getBool(String key) =>
       _getValueWithKeyOrThrowInCaseOfDifferentType<bool>(key);

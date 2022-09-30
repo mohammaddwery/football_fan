@@ -5,6 +5,11 @@ League adaptJsonToLeague(json) => League(
   name: json['name'],
   logo: json['logo'],
   flag: json['flag'],
-  season: json['season'],
-  round: json['round'],
 );
+
+adaptLeagueToJson(League league) => {
+  "id": league.id,
+  "name": league.name,
+  "logo": league.logo,
+  "flag": league.flag
+};

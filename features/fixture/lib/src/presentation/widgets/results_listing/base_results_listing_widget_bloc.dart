@@ -16,10 +16,9 @@ abstract class BaseResultsListingWidgetBloc<T> {
   UiState<List<T>>? getListItems() => _listItemsController.valueOrNull;
   void setListItems(UiState<List<T>>? uiState) => _listItemsController.sink.add(uiState);
 
-  fetchListItems({
-    Function()? onData,
-    Function(String message)? onError,
-  });
+  fetchRemoteListItems();
+
+  fetchLocalListItems();
 
   handleResultListRequest({
     required UiState<List<T>>? Function() getCurrentState,
@@ -27,7 +26,7 @@ abstract class BaseResultsListingWidgetBloc<T> {
     required Future<List<T>> Function() getResponseResult,
     String? exceptionTag,
     Function(String)? onError,
-    Function()? onData,
+    Function(List<T> items)? onData,
   }) async {
     try {
       UiState<List<T>>? uiState;
@@ -42,7 +41,7 @@ abstract class BaseResultsListingWidgetBloc<T> {
         uiState = UiState.noResults();
       }
       setCurrentState(uiState);
-      if(onData!=null) onData();
+      if(onData!=null) onData(result);
     } on FormatException catch (error) {
       _handleExceptionError(
         debugPrintMessage: '$logTag: $exceptionTag FormatException: ${error.message}',
@@ -66,11 +65,11 @@ abstract class BaseResultsListingWidgetBloc<T> {
     required String message,
     required String debugPrintMessage,
     Function(UiState<List<T>>? uiState)? setCurrentState,
-    UiState<List<T>>? Function()? getCurrentState,
+    required UiState<List<T>>? Function() getCurrentState,
     Function(String)? onError,
   }) {
     debugPrint(debugPrintMessage);
-    if(getCurrentState!=null && getCurrentState()?.data==null && setCurrentState!=null) {
+    if(getCurrentState()?.data==null && setCurrentState!=null) {
       UiState<List<T>> uiState = UiState.failure(message,);
       setCurrentState(uiState);
     }

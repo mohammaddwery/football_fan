@@ -6,6 +6,7 @@ import 'package:fixture/src/presentation/widgets/fixtures_screen_header/fixtures
 import 'package:flutter/material.dart';
 import 'package:shared_presentation/shared_presentation.dart';
 import '../../../core/enum.dart';
+import '../../helpers/fixture_images.dart';
 import '../base_widget_state.dart';
 
 class FixturesScreenHeader extends StatefulWidget {
@@ -64,7 +65,7 @@ class _FixturesScreenHeaderState extends BaseWidgetState<FixturesScreenHeader> {
       alignment: Alignment.centerLeft,
       children: [
         AnimatedContainer(
-          width: statusSnapshot.data == FixturesScreenHeaderComponentsAnimationStatus.started ? 0.0 : width* .3,
+          width: statusSnapshot.data == FixturesScreenHeaderComponentsAnimationStatus.started ? 0.0 : width* .35,
           duration: fixturesScreenBloc.componentAnimationDuration,
           curve: Curves.ease,
           alignment: AlignmentDirectional.bottomEnd,
@@ -80,7 +81,7 @@ class _FixturesScreenHeaderState extends BaseWidgetState<FixturesScreenHeader> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: width* .3 + 8.0),
+          padding: EdgeInsets.only(left: width* .35),
           child: AnimatedContainer(
             width: statusSnapshot.data == FixturesScreenHeaderComponentsAnimationStatus.started ? 0.0 : width* .18,
             onEnd: fixturesScreenBloc.onFirstComponentAnimationEnded,
@@ -112,7 +113,7 @@ class _FixturesScreenHeaderState extends BaseWidgetState<FixturesScreenHeader> {
       alignment: Alignment.centerLeft,
       children: [
         AnimatedContainer(
-          width: statusSnapshot.data == FixturesScreenHeaderComponentsAnimationStatus.started ? 0.0 : width* .5,
+          width: statusSnapshot.data == FixturesScreenHeaderComponentsAnimationStatus.started ? 0.0 : width* .65,
           duration: fixturesScreenBloc.componentAnimationDuration,
           curve: Curves.ease,
           alignment: AlignmentDirectional.bottomEnd,
@@ -120,7 +121,7 @@ class _FixturesScreenHeaderState extends BaseWidgetState<FixturesScreenHeader> {
             child: Row(
               children: [
                 Text(
-                  fixtureLocal.translate(FixtureSubtitlesKeys.fixtures),
+                  'UEFA Champions League',
                   style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
@@ -128,9 +129,9 @@ class _FixturesScreenHeaderState extends BaseWidgetState<FixturesScreenHeader> {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: width* .5 + 8.0),
+          padding: EdgeInsets.only(left: width* .65),
           child: AnimatedContainer(
-            width: statusSnapshot.data == FixturesScreenHeaderComponentsAnimationStatus.started ? 0.0 : width* .18,
+            width: statusSnapshot.data == FixturesScreenHeaderComponentsAnimationStatus.started ? 0.0 : width* .1,
             onEnd: fixturesScreenBloc.onSecondComponentAnimationEnded,
             duration: fixturesScreenBloc.componentAnimationDuration,
             curve: Curves.ease,
@@ -140,8 +141,7 @@ class _FixturesScreenHeaderState extends BaseWidgetState<FixturesScreenHeader> {
                 children: [
                   ImageWidget(
                     packageName: FixtureConstants.packageName,
-                    url: FixtureIcons.icFootball,
-                    color: Colors.black,
+                    url: FixtureImages.icLeague,
                     width: 32,
                     height: 32,
                     fit: BoxFit.contain,

@@ -13,8 +13,11 @@ class AppInjectionModule implements InjectionModule {
     injector
       ..registerSingleton<BuildConfig>(buildConfig)
       ..registerSingleton<DioFactory>(DioFactory())
-      ..registerFactoryParam((dio, _) => DioApiManager(
-        dio: dio,
+      ..registerSingleton<DioApiManager>(DioApiManager(
+        dio: injector.get<DioFactory>().provideDio(
+          baseUrl: buildConfig.configs[BuildConfig.apiBaseUrlKey],
+          apiKey: buildConfig.configs[BuildConfig.apiKey],
+        ),
       ))
       ..registerSingleton<SharedPreferencesManager>(AppSharedPreferencesManager(
         preferences: preferences,

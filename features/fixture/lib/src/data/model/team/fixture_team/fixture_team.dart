@@ -10,11 +10,9 @@ class Teams {
 }
 
 class FixtureTeam extends Team {
-  final bool winner;
   const FixtureTeam({
     required super.id,
     required super.name,
     required super.logo,
-    required this.winner,
   });
 }

@@ -1,6 +1,6 @@
 import '../core/enum.dart';
 
-class UiState<T> {
+class  UiState<T> {
   UiStateStatus status;
   T? data;
   String? message;

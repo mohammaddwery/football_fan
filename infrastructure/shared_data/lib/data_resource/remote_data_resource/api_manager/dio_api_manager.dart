@@ -17,7 +17,7 @@ class DioApiManager with ApiManager {
     try {
       final response = await request;
       debugPrint('----------------------------------------');
-      debugPrint('RESPONSE: $response');
+      debugPrint('RESPONSE: ${response.data}');
       debugPrint('----------------------------------------');
       return response.data;
     } on DioError catch (e) {
@@ -43,6 +43,7 @@ class DioApiManager with ApiManager {
   Future<dynamic> get({required String url, Map<String, String?> headers = const {}}) async {
     debugPrint('----------------------------------------');
     debugPrint('URL: $url');
+    debugPrint('----------------------------------------');
     return await _handleApiRequest(
       request: _dio.get(url, options: Options(headers: headers,),),
     );

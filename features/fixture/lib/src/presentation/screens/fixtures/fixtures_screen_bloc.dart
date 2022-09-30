@@ -1,17 +1,29 @@
-import 'dart:convert';
 import 'package:common_dependencies/common_dependencies.dart';
+import 'package:core/core.dart';
 import 'package:fixture/src/data/model/fixture/fixture_extension.dart';
-import 'package:fixture/src/data/model/status/status_extension.dart';
+import 'package:fixture/src/data/model/local_fixture_details/local_fixture_details_extension.dart';
+import 'package:fixture/src/data/model/local_fixture_details/locale_fixture_details.dart';
+import 'package:fixture/src/domain/use_case/fetch_local_fixture_details_use_case.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../../core/enum.dart';
 import '../../../data/model/fixture_details/fixture_details.dart';
-import '../../../data/model/fixture_details/fixture_details_adapter.dart';
+import '../../../data/model/local_fixture_details/local_fixture_details_adapter.dart';
+import '../../../domain/use_case/fetch_remote_fixtures_details_list_use_case.dart';
+import '../../../domain/use_case/save_local_fixture_details_use_case.dart';
 import '../../widgets/results_listing/base_results_listing_widget_bloc.dart';
 
 class FixturesScreenBloc extends BaseResultsListingWidgetBloc<FixtureDetails> {
-  FixturesScreenBloc() {
-    fetchListItems();
+  final FetchRemoteFixtureDetailsListUseCase _fetchRemoteFixturesUseCase;
+  final FetchLocalFixtureDetailsUseCase _fetchLocalFixtureDetailsUseCase;
+  final SaveLocalFixtureDetailsUseCase _saveLocalFixtureDetailsUseCase;
+  FixturesScreenBloc({
+    required FetchRemoteFixtureDetailsListUseCase fetchRemoteFixturesUseCase,
+    required FetchLocalFixtureDetailsUseCase fetchLocalFixtureDetailsUseCase,
+    required SaveLocalFixtureDetailsUseCase saveLocalFixtureDetailsUseCase,
+  }): _fetchRemoteFixturesUseCase = fetchRemoteFixturesUseCase,
+        _saveLocalFixtureDetailsUseCase = saveLocalFixtureDetailsUseCase,
+        _fetchLocalFixtureDetailsUseCase = fetchLocalFixtureDetailsUseCase {
+    fetchLocalListItems();
   }
 
   final PageStorageBucket pageStorageBucket = PageStorageBucket();
@@ -28,6 +40,10 @@ class FixturesScreenBloc extends BaseResultsListingWidgetBloc<FixtureDetails> {
     setCurrentFixturesTab(tab);
   }
 
+  reloadFixtures() {
+    fetchRemoteListItems();
+  }
+
   @override
   dispose() {
     _currentFixturesTabController.close();
@@ -35,21 +51,40 @@ class FixturesScreenBloc extends BaseResultsListingWidgetBloc<FixtureDetails> {
   }
 
   @override
-  fetchListItems({
-    Function()? onData,
-    Function(String message)? onError,
-  }) {
+  fetchRemoteListItems() {
     handleResultListRequest(
       getCurrentState: getListItems,
       setCurrentState: setListItems,
-      onData: onData,
-      onError: onError,
-      exceptionTag: 'fetchFixtures()',
+      exceptionTag: 'fetchRemoteFixtures()',
+      getResponseResult: () async {
+        List<FixtureDetails> fixtureDetailsList = await _fetchRemoteFixturesUseCase.call(NoParams());
+        _saveLocalFixtureDetailsUseCase.call(
+            adaptFixtureDetailsListToLocalFixtureDetails(fixtureDetailsList)
+        );
+        return fixtureDetailsList;
+      },
+    );
+  }
+
+  @override
+  fetchLocalListItems() {
+    handleResultListRequest(
+      setCurrentState: setListItems,
+      getCurrentState: getListItems,
+      onError: (message) => fetchRemoteListItems(),
+      exceptionTag: 'fetchLocalFixtures()',
       getResponseResult: () async {
         await Future.delayed(const Duration(seconds: 2));
-        String response = await rootBundle.loadString("packages/fixture/assets/fixtures.json");
-        var jsonResponse = json.decode(response);
-        return adaptJsonToFixtureDetailsList(jsonResponse['response']);
+        LocalFixtureDetails localFixtureDetails = await _fetchLocalFixtureDetailsUseCase.call(NoParams());
+        /// We need to determine the data resource to get the fixtures.
+        /// We can hit the API once in the day then save the results locally.
+        /// When we refresh the results we check if there are results stored locally,
+        /// AND we still in the same day we display the stored results OTHERWISE,
+        /// we hit the API to get new results.
+        if(!localFixtureDetails.isLastSaveTryValid) {
+          fetchRemoteListItems();
+        }
+        return localFixtureDetails.fixtureDetailsList;
       },
     );
   }

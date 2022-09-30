@@ -65,7 +65,13 @@ class _FixturesScreenState extends BaseWidgetState<FixturesScreen> {
             case UiStateStatus.noResults:
               return ErrorPlaceholderWidget(fixtureLocal.translate(FixtureSubtitlesKeys.noResultsFound));
             case UiStateStatus.failure:
-              return ErrorPlaceholderWidget(resultsSnapshot.data!.message!,);
+              return ErrorPlaceholderWidget(
+                resultsSnapshot.data!.message!,
+                refreshButton: RefreshButton(
+                  onClicked: fixturesScreenBloc.reloadFixtures,
+                  title: fixtureLocal.translate(FixtureSubtitlesKeys.refresh),
+                ),
+              );
 
             default:
               return Container();
@@ -83,7 +89,7 @@ class _FixturesScreenState extends BaseWidgetState<FixturesScreen> {
           children: [
             PageStorage(
               bucket: fixturesScreenBloc.pageStorageBucket,
-              child: buildFixturesList(fixturesTabSnapshot.data!),
+              child: buildFixturesComponent(fixturesTabSnapshot.data!),
             ),
             Positioned(
               bottom: 32.0,
@@ -100,21 +106,37 @@ class _FixturesScreenState extends BaseWidgetState<FixturesScreen> {
     );
   }
 
-  Widget buildFixturesList(FixturesTab tab) {
+  Widget buildFixturesComponent(FixturesTab tab) {
     switch(tab) {
       case FixturesTab.finished:
-        return ResultListingWidget<FixtureDetails>(
-          key: PageStorageKey<String>(tab.toString()),
-          items: fixturesScreenBloc.finishedFixtures,
-          listItemBuilder: (context, item) => FixtureCard(item),
-        );
+        return buildFinishedFixturesWidget();
 
       case FixturesTab.upcoming:
-        return ResultListingWidget<FixtureDetails>(
-          key: PageStorageKey<String>(tab.toString()),
-          items: fixturesScreenBloc.upcomingFixtures,
-          listItemBuilder: (context, item) => FixtureCard(item),
-        );
+        return buildUpcomingFixturesWidget();
     }
+  }
+
+  buildFinishedFixturesWidget() {
+    if(fixturesScreenBloc.finishedFixtures.isEmpty) {
+      return ErrorPlaceholderWidget(fixtureLocal.translate(FixtureSubtitlesKeys.noResultsFound));
+    }
+
+    return ResultListingWidget<FixtureDetails>(
+      key: PageStorageKey<String>(FixturesTab.finished.toString()),
+      items: fixturesScreenBloc.finishedFixtures,
+      listItemBuilder: (context, item) => FixtureCard(item),
+    );
+  }
+
+  buildUpcomingFixturesWidget() {
+    if(fixturesScreenBloc.upcomingFixtures.isEmpty) {
+      return ErrorPlaceholderWidget(fixtureLocal.translate(FixtureSubtitlesKeys.noResultsFound));
+    }
+
+    return ResultListingWidget<FixtureDetails>(
+      key: PageStorageKey<String>(FixturesTab.upcoming.toString()),
+      items: fixturesScreenBloc.upcomingFixtures,
+      listItemBuilder: (context, item) => FixtureCard(item),
+    );
   }
 }
