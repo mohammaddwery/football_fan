@@ -13,17 +13,35 @@ class AppThemeFactory {
     backgroundColor: AppColors.backgroundLight,
     dividerColor: AppColors.dividerColor,
     textTheme: TextTheme(
+      titleSmall: TextStyle(
+        fontSize: AppFonts.size12,
+        fontWeight: FontWeight.w300,
+        color: Colors.white,
+        height: 1.0,
+      ),
+      titleMedium: TextStyle(
+        fontSize: AppFonts.size16,
+        fontWeight: FontWeight.w400,
+        color: Colors.white,
+        height: 1.0,
+      ),
+      titleLarge: TextStyle(
+        fontSize: AppFonts.size28,
+        fontWeight: FontWeight.w500,
+        color: Colors.white,
+        height: 1.0,
+      ),
       bodySmall: TextStyle(
         fontSize: AppFonts.size14,
-        fontWeight: FontWeight.w500,
-        color: AppColors.textSecondaryBody,
+        fontWeight: FontWeight.w400,
+        color: Colors.grey.shade900,
         height: 1.0,
       ),
       bodyMedium: TextStyle(
         fontSize: AppFonts.size14,
-        fontWeight: FontWeight.w400,
-        color: Colors.black,
-        height: 1.2,
+        fontWeight: FontWeight.w500,
+        color: Colors.grey.shade900,
+        height: 1.0,
       ),
       bodyLarge: TextStyle(
         fontSize: AppFonts.size18,

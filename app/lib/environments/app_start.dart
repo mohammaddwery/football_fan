@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:core/core.dart';
+import 'package:fixture/fixture.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,6 +18,7 @@ abstract class AppStart {
     AppResolver(),
 
     // Features
+    FixtureResolver(),
   ];
 
   AppStart(this.buildConfig);

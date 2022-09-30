@@ -19,14 +19,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => MaterialApp(
-    home: Container(
-      color: Colors.white,
-      alignment: Alignment.center,
-      child: Text(
-        'Home',
-        style: Theme.of(context).textTheme.bodyLarge,
-      ),
-    ),
     onGenerateRoute: (settings) => generateRoute(
       settings: settings,
       routes: routes,

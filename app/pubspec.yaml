@@ -22,6 +22,8 @@ dependencies:
     path: ../infrastructure/shared_data/
 
   ## Features
+  fixture:
+    path: ../features/fixture
 
   flutter_localizations:
     sdk: flutter
