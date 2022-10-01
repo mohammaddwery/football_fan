@@ -8,6 +8,7 @@ import 'package:fixture/src/data/repository/fixture_repository_impl.dart';
 import 'package:fixture/src/domain/use_case/fetch_local_fixture_details_use_case.dart';
 import 'package:fixture/src/domain/use_case/save_local_fixture_details_use_case.dart';
 import 'package:fixture/src/presentation/widgets/fixtures_screen_header/fixtures_screen_header_bloc.dart';
+import 'package:fixture/src/presentation/widgets/lineup_widget/lineup_widget_bloc.dart';
 import 'package:shared_data/shared_data.dart';
 import '../domain/repository/fixture_repository.dart';
 import '../domain/use_case/fetch_remote_fixtures_details_list_use_case.dart';
@@ -53,6 +54,9 @@ class FixtureInjectionModule implements InjectionModule {
       ..registerFactoryParam((param1, _) => FloatSelectionTabBarBloc(
         selectedTab: param1,
       ),)
+      ..registerFactoryParam((fixtureId, _) => LineupWidgetBloc(
+        fixtureId: fixtureId,
+      ))
       ..registerFactory<FixtureNavigator>(() => AppFixtureNavigator(),)
     ;
   }

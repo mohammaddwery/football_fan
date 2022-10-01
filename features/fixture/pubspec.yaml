@@ -32,7 +32,7 @@ flutter:
 
 
   assets:
-    - assets/fixtures.json
+    - assets/lineup_list.json
     - assets/icons/
     - assets/images/
     - assets/subtitles/

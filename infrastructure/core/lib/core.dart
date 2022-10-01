@@ -13,4 +13,5 @@ export 'src/modules/injection_module.dart';
 export 'src/modules/router_module.dart';
 export 'src/adapters/adapters.dart';
 export 'src/enum/enum.dart';
-export 'src/core/use_case.dart';
+export 'src/domain/use_case.dart';
+export 'src/presentation/presentation.dart';

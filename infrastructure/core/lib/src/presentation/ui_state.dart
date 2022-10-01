@@ -1,4 +1,5 @@
-import '../core/enum.dart';
+
+import '../../core.dart';
 
 class  UiState<T> {
   UiStateStatus status;

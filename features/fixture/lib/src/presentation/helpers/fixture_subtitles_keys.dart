@@ -6,4 +6,5 @@ class FixtureSubtitlesKeys {
   static const String finished = 'finished';
   static const String footballFan = 'football_fan';
   static const String refresh = 'refresh';
+  static const String lineup = 'lineup';
 }

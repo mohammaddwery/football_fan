@@ -7,9 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_presentation/shared_presentation.dart';
 import '../../../core/enum.dart';
 import '../../helpers/fixture_subtitles_keys.dart';
-import '../../ui_state.dart';
 import '../../widgets/base_widget_state.dart';
-import '../../widgets/fixture_card.dart';
+import '../../widgets/fixture_card/fixture_card.dart';
 import '../../widgets/fixtures_screen_header/fixtures_screen_header.dart';
 import '../../widgets/foat_selection_tab_bar/float_selection_tab_bar.dart';
 
@@ -124,7 +123,7 @@ class _FixturesScreenState extends BaseWidgetState<FixturesScreen> {
     return ResultListingWidget<FixtureDetails>(
       key: PageStorageKey<String>(FixturesTab.finished.toString()),
       items: fixturesScreenBloc.finishedFixtures,
-      listItemBuilder: (context, item) => FixtureCard(item),
+      listItemBuilder: buildFixtureCard,
     );
   }
 
@@ -136,7 +135,17 @@ class _FixturesScreenState extends BaseWidgetState<FixturesScreen> {
     return ResultListingWidget<FixtureDetails>(
       key: PageStorageKey<String>(FixturesTab.upcoming.toString()),
       items: fixturesScreenBloc.upcomingFixtures,
-      listItemBuilder: (context, item) => FixtureCard(item),
+      listItemBuilder: buildFixtureCard,
+    );
+  }
+
+  Widget buildFixtureCard(BuildContext context, FixtureDetails fixtureDetails) {
+    return GestureDetector(
+      onTap: () => fixturesNavigator.navigateToDetails(context, fixtureDetails),
+      child: Hero(
+        tag: fixtureDetails.fixture.id,
+        child: FixtureCard(fixtureDetails),
+      ),
     );
   }
 }
