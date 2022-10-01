@@ -31,7 +31,7 @@ class _LineupWidgetState extends BaseWidgetState<LineupWidget> {
       builder: (context, lineUpListSnapshot) {
         switch (lineUpListSnapshot.data?.status) {
           case UiStateStatus.loading:
-            return LoadingWidget();
+            return LoadingWidget(paddingValue: 48,);
           case UiStateStatus.success:
             return buildTeamLineups(lineUpListSnapshot.data!.data!);
           case UiStateStatus.noResults:
@@ -62,10 +62,26 @@ class _LineupWidgetState extends BaseWidgetState<LineupWidget> {
           ),
         ),
       ),
-      child: Column(
+      child: Stack(
         children: [
-          buildHomeLineup(lineupList[0]),
-          buildAwayLineup(lineupList[1]),
+          Column(
+            children: [
+              buildHomeLineup(lineupList[0]),
+              buildAwayLineup(lineupList[1]),
+            ],
+          ),
+          Positioned(
+            left: 8,
+            top: 8,
+            right: 8,
+            child: buildTeamLineupData(lineupList[0]),
+          ),
+          Positioned(
+            left: 8,
+            bottom: 8,
+            right: 8,
+            child: buildTeamLineupData(lineupList[1]),
+          ),
         ],
       ),
     );
@@ -163,4 +179,39 @@ class _LineupWidgetState extends BaseWidgetState<LineupWidget> {
     );
   }
 
+  Widget buildTeamLineupData(Lineup lineup) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        buildTeamLineupDataContainer(
+          child: ImageWidget(
+            packageName: FixtureConstants.packageName,
+            url: lineup.team.logo,
+            width: 30,
+            height: 30,
+            fit: BoxFit.contain,
+          ),
+        ),
+        const Spacer(),
+        buildTeamLineupDataContainer(
+          child: Text(
+            lineup.formation,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(fontWeight: FontWeight.w900,),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildTeamLineupDataContainer({required Widget child}) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8,),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(6),
+        boxShadow: AppColors.cardShadow,
+      ),
+      child: child,
+    );
+  }
 }

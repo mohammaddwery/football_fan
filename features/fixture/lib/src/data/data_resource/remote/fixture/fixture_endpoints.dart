@@ -1,3 +1,5 @@
 class FixtureEndpoints {
-  static const String getFixtures = "fixtures";
+  static const String fixtures = "fixtures";
+  static const String lineups = "lineups";
+  static const String getLineupList = '$fixtures/$lineups';
 }

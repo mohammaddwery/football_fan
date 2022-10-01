@@ -3,10 +3,16 @@ import 'package:core/core.dart';
 import 'package:flutter/services.dart';
 import '../../../data/model/lineup/lineup.dart';
 import '../../../data/model/lineup/lineup_adapter.dart';
+import '../../../domain/use_case/fetch_lineup_List_use_case.dart';
 
 class LineupWidgetBloc extends BaseBloc<Lineup>{
   final int _fixtureId;
-  LineupWidgetBloc({required int fixtureId}): _fixtureId = fixtureId {
+  final FetchLineupListUseCase _fetchLineupListUseCase;
+  LineupWidgetBloc({
+    required int fixtureId,
+    required FetchLineupListUseCase fetchLineupListUseCase,
+  }): _fixtureId = fixtureId,
+        _fetchLineupListUseCase = fetchLineupListUseCase {
     fetchLineupList();
   }
 
@@ -51,10 +57,7 @@ class LineupWidgetBloc extends BaseBloc<Lineup>{
       setCurrentState: setLineupList,
       exceptionTag: 'fetchLineupList()',
       getResponseResult: () async {
-        await Future.delayed(const Duration(seconds: 2));
-        String response = await rootBundle.loadString("packages/fixture/assets/lineup_list.json");
-        var jsonResponse = decodeJson(response);
-        return adaptJsonToLineupList(jsonResponse['response']);
+        return await _fetchLineupListUseCase.call(_fixtureId);
       },
     );
   }

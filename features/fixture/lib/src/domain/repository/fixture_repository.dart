@@ -5,4 +5,5 @@ abstract class FixtureRepository {
   Future<dynamic> fetchRemoteFixtures();
   LocalFixtureDetails fetchLocalFixtures();
   Future<bool> saveLocalFixtures(LocalFixtureDetails localFixtureDetails);
+  Future<dynamic> fetchLineupList(int fixtureId);
 }

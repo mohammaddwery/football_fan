@@ -74,7 +74,6 @@ class FixturesScreenBloc extends BaseResultsListingWidgetBloc<FixtureDetails> {
       onError: (message) => fetchRemoteListItems(),
       exceptionTag: 'fetchLocalFixtures()',
       getResponseResult: () async {
-        await Future.delayed(const Duration(seconds: 2));
         LocalFixtureDetails localFixtureDetails = await _fetchLocalFixtureDetailsUseCase.call(NoParams());
         /// We need to determine the data resource to get the fixtures.
         /// We can hit the API once in the day then save the results locally.

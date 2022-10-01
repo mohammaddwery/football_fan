@@ -28,8 +28,10 @@ class _FixtureDetailsScreenState extends BaseWidgetState<FixtureDetailsScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             buildHeader(),
-            const SizedBox(height: 16,),
-            buildLineupTitle(),
+            const SizedBox(height: 24,),
+            buildRefereeWidget(),
+            const SizedBox(height: 32,),
+            buildSectionTitle(fixtureLocal.translate(FixtureSubtitlesKeys.lineup)),
             const SizedBox(height: 16,),
             LineupWidget(widget.fixtureDetails.fixture.id),
             const SizedBox(height: 24,),
@@ -116,14 +118,28 @@ class _FixtureDetailsScreenState extends BaseWidgetState<FixtureDetailsScreen> {
     );
   }
 
-  Widget buildLineupTitle() {
+  Widget buildRefereeWidget() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        buildSectionTitle('${fixtureLocal.translate(FixtureSubtitlesKeys.referee)}:'),
+        const SizedBox(width: 16,),
+        Text(
+          widget.fixtureDetails.fixture.referee??fixtureLocal.translate(FixtureSubtitlesKeys.unknown),
+          style: Theme.of(context).textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w400),
+        ),
+      ],
+    );
+  }
+
+  Widget buildSectionTitle(title) {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            fixtureLocal.translate(FixtureSubtitlesKeys.lineup),
+            title,
             style: Theme.of(context).textTheme.bodyLarge,
             textAlign: TextAlign.center,
           ),

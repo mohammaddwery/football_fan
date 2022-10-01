@@ -7,4 +7,6 @@ class FixtureSubtitlesKeys {
   static const String footballFan = 'football_fan';
   static const String refresh = 'refresh';
   static const String lineup = 'lineup';
+  static const String referee = 'referee';
+  static const String unknown = 'unknown';
 }

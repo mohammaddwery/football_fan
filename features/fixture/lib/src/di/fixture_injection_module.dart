@@ -11,6 +11,7 @@ import 'package:fixture/src/presentation/widgets/fixtures_screen_header/fixtures
 import 'package:fixture/src/presentation/widgets/lineup_widget/lineup_widget_bloc.dart';
 import 'package:shared_data/shared_data.dart';
 import '../domain/repository/fixture_repository.dart';
+import '../domain/use_case/fetch_lineup_List_use_case.dart';
 import '../domain/use_case/fetch_remote_fixtures_details_list_use_case.dart';
 import '../presentation/router/app_fixture_navigator.dart';
 import '../presentation/screens/fixtures/fixtures_screen_bloc.dart';
@@ -44,6 +45,9 @@ class FixtureInjectionModule implements InjectionModule {
       ..registerFactory(() => SaveLocalFixtureDetailsUseCase(
         fixtureRepository: injector.get(),
       ),)
+      ..registerFactory(() => FetchLineupListUseCase(
+        fixtureRepository: injector.get(),
+      ),)
         // PRESENTATION
       ..registerFactory(() => FixturesScreenBloc(
         fetchRemoteFixturesUseCase: injector.get(),
@@ -56,6 +60,7 @@ class FixtureInjectionModule implements InjectionModule {
       ),)
       ..registerFactoryParam((fixtureId, _) => LineupWidgetBloc(
         fixtureId: fixtureId,
+        fetchLineupListUseCase: injector.get(),
       ))
       ..registerFactory<FixtureNavigator>(() => AppFixtureNavigator(),)
     ;

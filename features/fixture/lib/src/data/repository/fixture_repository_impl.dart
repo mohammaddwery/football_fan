@@ -20,4 +20,7 @@ class FixtureRepositoryImpl extends FixtureRepository {
   @override
   Future<bool> saveLocalFixtures(LocalFixtureDetails localFixtureDetails) =>
       _fixtureStore.saveFixtures(localFixtureDetails);
+
+  @override
+  Future fetchLineupList(int fixtureId) => _apiProvider.fetchLineupList(fixtureId);
 }

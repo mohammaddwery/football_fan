@@ -12,7 +12,15 @@ class FixtureApiProvider {
       "from": "2022-09-10",
       "to": "2022-10-20"
     });
-    final String url = '${FixtureEndpoints.getFixtures}$query';
+    final String url = '${FixtureEndpoints.fixtures}$query';
+    return await _apiManager.get(url: url,);
+  }
+
+  Future<dynamic> fetchLineupList(int fixtureId) async {
+    final query = ApiUtils.buildApiQuery({
+      "fixture": fixtureId
+    });
+    final String url = '${FixtureEndpoints.getLineupList}$query';
     return await _apiManager.get(url: url,);
   }
 }
